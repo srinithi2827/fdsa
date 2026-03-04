@@ -1,0 +1,26 @@
+import math
+import numpy as np
+from numpy.random import randn
+from statsmodels.stats.weightstats import ztest
+
+mean_iq = 110
+sd_iq = 15 / math.sqrt(50)
+alpha = 0.05
+null_mean = 100
+
+data = sd_iq * randn(50) + mean_iq
+
+print("Sample Mean = %.2f" % np.mean(data))
+print("Sample Std Dev = %.2f" % np.std(data))
+
+ztest_score, p_value = ztest(data, value=null_mean, alternative='larger')
+
+print("\nZ-test Score =", ztest_score)
+print("P-value =", p_value)
+
+if p_value < alpha:
+    print("\nDecision: Reject Null Hypothesis")
+    print("Conclusion: Sample mean is significantly greater than 100")
+else:
+    print("\nDecision: Fail to Reject Null Hypothesis")
+    print("Conclusion: No sufficient evidence that mean is greater than 100")
